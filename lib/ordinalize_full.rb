@@ -3,7 +3,7 @@
 require "i18n"
 
 module OrdinalizeFull
-  I18n.load_path += Dir[File.join(__dir__, "ordinalize_precedence/locales/*.yml")]
+  I18n.load_path += Dir[File.join(__dir__, "ordinalize_full/locales/*.yml")]
 
   def ordinalize(style: :precedence, gender: :masculine, plurality: :singular)
     case style
@@ -42,7 +42,7 @@ module OrdinalizeFull
       value = I18n.t("ordinalize_precedence.n_#{self}", throw: true) if value.empty?
       value
     else
-      I18n.t("ordinalize_spatial.n_#{self}", throw: true)
+      I18n.t("ordinalize_precedence.n_#{self}", throw: true)
     end
   rescue ArgumentError
     raise NotImplementedError, "Unknown locale #{I18n.locale}"
