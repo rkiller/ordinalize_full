@@ -3,29 +3,64 @@
 require "i18n"
 
 module OrdinalizeFull
-  I18n.load_path += Dir[File.join(__dir__, "ordinalize_full/locales/*.yml")]
+  I18n.load_path += Dir[File.join(__dir__, "ordinalize_precedence/locales/*.yml")]
 
-  def ordinalize(in_full: false, gender: :masculine, plurality: :singular)
-    if in_full
-      ordinalize_in_full(gender: gender, plurality: plurality)
+  def ordinalize(style: :precedence, gender: :masculine, plurality: :singular)
+    case style
+    when :precedence
+      ordinalize_in_precedence(gender: gender, plurality: plurality)
+    when :spatial
+      ordinalize_in_spatial(gender: gender, plurality: plurality)
     else
       ordinalize_in_short(gender: gender, plurality: plurality)
     end
   end
 
-  def ordinalize_in_full(gender: :masculine, plurality: :singular)
+  def ordinalize_in_precedence(gender: :masculine, plurality: :singular)
     case I18n.locale
     when :fr
-      value = I18n.t("ordinalize_full.n_#{self}_#{gender}", throw: false, default: "")
-      value = I18n.t("ordinalize_full.n_#{self}", throw: true) if value.empty?
+      value = I18n.t("ordinalize_precedence.n_#{self}_#{gender}", throw: false, default: "")
+      value = I18n.t("ordinalize_precedence.n_#{self}", throw: true) if value.empty?
       value
     when :es
-      value = I18n.t("ordinalize_full.n_#{self}", throw: false, default: "")
+      value = I18n.t("ordinalize_precedence.n_#{self}", throw: false, default: "")
 
       if value.empty?
         value = [
-          I18n.t("ordinalize_full.n_#{(self / 10) * 10}", throw: true),
-          I18n.t("ordinalize_full.n_#{self % 10}", throw: true)
+          I18n.t("ordinalize_precedence.n_#{(self / 10) * 10}", throw: true),
+          I18n.t("ordinalize_precedence.n_#{self % 10}", throw: true)
+        ].join(" ")
+      end
+
+      value = value.split.map { |part| part.chop << "a" }.join(" ") if gender == :feminine
+      value << "s" if plurality == :plural
+      value = value.chop if value.end_with?("ero")
+
+      value
+    when :de
+      value = I18n.t("ordinalize_precedence.n_#{self}_#{gender}", throw: false, default: "")
+      value = I18n.t("ordinalize_precedence.n_#{self}", throw: true) if value.empty?
+      value
+    else
+      I18n.t("ordinalize_spatial.n_#{self}", throw: true)
+    end
+  rescue ArgumentError
+    raise NotImplementedError, "Unknown locale #{I18n.locale}"
+  end
+
+  def ordinalize_in_spatial(gender: :masculine, plurality: :singular)
+    case I18n.locale
+    when :fr
+      value = I18n.t("ordinalize_spatial.n_#{self}_#{gender}", throw: false, default: "")
+      value = I18n.t("ordinalize_spatial.n_#{self}", throw: true) if value.empty?
+      value
+    when :es
+      value = I18n.t("ordinalize_spatial.n_#{self}", throw: false, default: "")
+
+      if value.empty?
+        value = [
+          I18n.t("ordinalize_spatial.n_#{(self / 10) * 10}", throw: true),
+          I18n.t("ordinalize_spatial.n_#{self % 10}", throw: true)
         ].join(" ")
       end
 
@@ -35,13 +70,14 @@ module OrdinalizeFull
 
       value
     else
-      I18n.t("ordinalize_full.n_#{self}", throw: true)
+      I18n.t("ordinalize_spatial.n_#{self}", throw: true)
     end
   rescue ArgumentError
     raise NotImplementedError, "Unknown locale #{I18n.locale}"
   end
 
-  alias_method :ordinalize_full, :ordinalize_in_full
+  alias_method :ordinalize_precedence, :ordinalize_in_precedence
+  alias_method :ordinalize_spatial, :ordinalize_in_spatial
 
 private
 
@@ -79,6 +115,8 @@ private
       elsif value.end_with?("as")
         ".ᵃˢ"
       end
+    when :de
+      gender == :masculine ? "ter" : "te"
     end
 
     [self, suffix].join

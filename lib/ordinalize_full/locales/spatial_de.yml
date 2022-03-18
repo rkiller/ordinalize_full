@@ -1,0 +1,102 @@
+de:
+  ordinalize_spatial:
+    n_1: erster
+    n_2: zweiter
+    n_3: dritter
+    n_4: vierter
+    n_5: fünfter
+    n_6: sechster
+    n_7: siebter
+    n_8: achter
+    n_9: neunter
+    n_10: zehnter
+    n_11: elfter
+    n_12: zwölfter
+    n_13: dreizehnter
+    n_14: vierzehnter
+    n_15: fünfzehnter
+    n_16: sechszehnter
+    n_17: siebzehnter
+    n_18: achtzehnter
+    n_19: neunzehnter
+    n_20: zwanzigster
+    n_21: einundzwanzigster
+    n_22: zweiundzwanzigster
+    n_23: dreiundzwanzigster
+    n_24: vier
+    n_25: fünf
+    n_26: sechs
+    n_27: sieben
+    n_28: acht
+    n_29: neun
+    n_30: dreissigster
+    n_31: ein
+    n_32: zwei
+    n_33: drei
+    n_34: vier
+    n_35: fünf
+    n_36: sechs
+    n_37: sieben
+    n_38: acht
+    n_39: neun
+    n_40: vierzigster
+    n_41: ein
+    n_42: zwei
+    n_43: drei
+    n_44: vier
+    n_45: fünf
+    n_46: sechs
+    n_47: sieben
+    n_48: acht
+    n_49: neun
+    n_50: fünfzigster
+    n_51: fifty first
+    n_52: fifty second
+    n_53: fifty third
+    n_54: fifty fourth
+    n_55: fifty fifth
+    n_56: fifty sixth
+    n_57: fifty seventh
+    n_58: fifty eighth
+    n_59: fifty ninth
+    n_60: sixtieth
+    n_61: sixty first
+    n_62: sixty second
+    n_63: sixty third
+    n_64: sixty fourth
+    n_65: sixty fifth
+    n_66: sixty sixth
+    n_67: sixty seventh
+    n_68: sixty eighth
+    n_69: sixty ninth
+    n_70: seventieth
+    n_71: seventy first
+    n_72: seventy second
+    n_73: seventy third
+    n_74: seventy fourth
+    n_75: seventy fifth
+    n_76: seventy sixth
+    n_77: seventy seventh
+    n_78: seventy eighth
+    n_79: seventy ninth
+    n_80: eightieth
+    n_81: eighty first
+    n_82: eighty second
+    n_83: eighty third
+    n_84: eighty fourth
+    n_85: eighty fifth
+    n_86: eighty sixth
+    n_87: eighty seventh
+    n_88: eighty eighth
+    n_89: eighty ninth
+    n_90: ninetieth
+    n_91: ninety first
+    n_92: ninety second
+    n_93: ninety third
+    n_94: ninety fourth
+    n_95: ninety fifth
+    n_96: ninety sixth
+    n_97: ninety seventh
+    n_98: ninety eighth
+    n_99: ninety ninth
+    n_100: one hundredth

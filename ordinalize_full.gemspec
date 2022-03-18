@@ -5,12 +5,12 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |spec|
   spec.name          = "ordinalize_full"
-  spec.version       = "2.0.0"
-  spec.authors       = ["Cédric Félizard"]
-  spec.email         = ["cedric@felizard.fr"]
-  spec.summary       = "Turns a number into an ordinal string such as first, second, third or 1st, 2nd, 3rd."
+  spec.version       = "0.0.1"
+  spec.authors       = ["Roger Killer"]
+  spec.email         = ["rogerkiller@gmail.com"]
+  spec.summary       = "Turns a number into an ordinal string such as primary, secondary, tertiary or 1st, 2nd, 3rd."
   spec.description   = spec.summary
-  spec.homepage      = "https://github.com/infertux/ordinalize_full"
+  spec.homepage      = "https://github.com/rkiller/ordinalize_full"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)

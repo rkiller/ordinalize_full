@@ -1,0 +1,14 @@
+en:
+  ordinalize_precedence:
+    n_1: primary
+    n_2: secondary
+    n_3: tertiary
+    n_4: quaternary
+    n_5: quinary
+    n_6: senary
+    n_7: septenary
+    n_8: octonary
+    n_9: nonary
+    n_10: decenary
+    n_11: undenary
+    n_12: duodenary

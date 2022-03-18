@@ -1,5 +1,5 @@
 it:
-  ordinalize_full:
+  ordinalize_spatial:
     n_1: primo
     n_2: secondo
     n_3: terzo
