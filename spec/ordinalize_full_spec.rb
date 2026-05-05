@@ -49,12 +49,44 @@ describe OrdinalizeFull do
     specify { expect(1.ordinalize_full).to eq(1.ordinalize_in_full) }
   end
 
+  describe "#ordinalize_in_precedence" do
+    context "with the default locale (:en)" do
+      before { I18n.locale = :en }
+
+      specify { expect(1.ordinalize_in_precedence).to eq("primary") }
+      specify { expect(3.ordinalize_in_precedence).to eq("tertiary") }
+      specify { expect(12.ordinalize_in_precedence).to eq("duodenary") }
+
+      it "raises beyond the supported range" do
+        expect { 13.ordinalize_in_precedence }.to raise_error(NotImplementedError)
+      end
+    end
+
+    context "with locale = :fr (no translation data)" do
+      before { I18n.locale = :fr }
+
+      it "raises NotImplementedError" do
+        expect { 1.ordinalize_in_precedence }.to raise_error(NotImplementedError)
+      end
+    end
+  end
+
   describe "#ordinalize" do
     context "with the default locale (:en)" do
       before { I18n.locale = :en }
 
       specify { expect(1.ordinalize(in_full: true)).to eq("first") }
       specify { expect(1.ordinalize(in_full: false)).to eq("1st") }
+
+      {
+        1 => "1st", 2 => "2nd", 3 => "3rd", 4 => "4th",
+        11 => "11th", 12 => "12th", 13 => "13th",
+        21 => "21st", 22 => "22nd", 23 => "23rd",
+        101 => "101st", 111 => "111th", 113 => "113th",
+        0 => "0th", -1 => "-1st", -11 => "-11th"
+      }.each do |n, expected|
+        specify { expect(n.ordinalize).to eq(expected) }
+      end
     end
 
     context "with locale = :fr" do
@@ -88,6 +120,37 @@ describe OrdinalizeFull do
       specify { expect(14.ordinalize(gender: :feminine, plurality: :plural)).to eq("14.ᵃˢ") }
       specify { expect(55.ordinalize).to eq("55.ᵒ") }
       specify { expect(22.ordinalize(gender: :feminine, plurality: :plural)).to eq("22.ᵃˢ") }
+    end
+
+    context "with an unsupported locale" do
+      around do |example|
+        previous = I18n.enforce_available_locales
+        I18n.enforce_available_locales = false
+        I18n.locale = :ja
+        example.run
+        I18n.enforce_available_locales = previous
+        I18n.locale = :en
+      end
+
+      it "raises NotImplementedError" do
+        expect { 1.ordinalize }.to raise_error(NotImplementedError)
+      end
+    end
+
+    context "with invalid keyword arguments" do
+      before { I18n.locale = :en }
+
+      it "raises ArgumentError on unknown gender" do
+        expect { 1.ordinalize(gender: :neuter) }.to raise_error(ArgumentError, /gender/)
+      end
+
+      it "raises ArgumentError on unknown plurality" do
+        expect { 1.ordinalize(plurality: :dual) }.to raise_error(ArgumentError, /plurality/)
+      end
+
+      it "raises ArgumentError from ordinalize_in_full" do
+        expect { 1.ordinalize_in_full(gender: :neuter) }.to raise_error(ArgumentError)
+      end
     end
   end
 end
